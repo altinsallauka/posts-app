@@ -33,7 +33,7 @@ const PostsReducer = (state = initialState, action) => {
       return { ...state, error: action.payload };
     case EDIT_POST_SUCCESS:
       const updatedPosts = state.posts.filter(
-        (post) => post._id != action.payload._id
+        (post) => post._id !== action.payload._id
       );
       return { ...state, posts: [...updatedPosts, action.payload] };
     case EDIT_POST_ERROR:
