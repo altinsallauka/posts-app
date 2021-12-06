@@ -38,7 +38,19 @@ const ModalComponent = (props) => {
         contentLabel="Example Modal"
       >
         {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-        <button onClick={closeModal}>close</button>
+        <div className="row">
+          <div className="col-sm">
+            <h2>{props.modalTitle}</h2>
+          </div>
+          <div className="col-sm">
+            <button
+              onClick={closeModal}
+              className="float-right btn btn-warning"
+            >
+              close
+            </button>
+          </div>
+        </div>
         <div className="body">{props.children}</div>
       </Modal>
     </React.Fragment>

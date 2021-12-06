@@ -7,8 +7,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import Modal from "react-modal";
-import ModalComponent from "../modal/modal";
-import { toggleModal } from "../modal/actions";
+import ModalComponent from "../../components/modal/modal";
+import { toggleModal } from "../../components/modal/actions";
 Modal.setAppElement("body");
 const Posts = (props) => {
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ const Posts = (props) => {
     dispatch(retrievePosts());
     dispatch(toggleModal(false));
   };
+  const modalTitle = "Hello Everyone";
   useEffect(() => {
     dispatch(retrievePosts());
   }, []);
@@ -95,22 +96,24 @@ const Posts = (props) => {
           />
         )}
       </div>
-      <ModalComponent onDelete={onDelete}>
+      <ModalComponent onDelete={onDelete} modalTitle={modalTitle}>
         <span>
-          Do you really want to delete this question? This process cannot be
+          Do you really want to delete this element? This process cannot be
           undone.
         </span>
-        <div>
+        <div className="mt-4">
           <input
             type="button"
             variant="secondary"
             value="Cancel"
+            className="btn btn-secondary"
             onClick={() => dispatch(toggleModal(false))}
           />
           <input
             type="button"
             variant="danger"
             value="Delete"
+            className="btn btn-danger"
             onClick={() => onDelete(rowId)}
           />
         </div>

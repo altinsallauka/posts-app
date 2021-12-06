@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
-import Posts from "./components/Posts/Posts";
-import AddPost from "./components/AddPost/AddPost";
-import Users from "./components/Users/Users";
+import Posts from "./pages/Posts/Posts";
+import AddPost from "./pages/AddPost/AddPost";
+import Users from "./pages/Users/Users";
 
 function App() {
   return (
