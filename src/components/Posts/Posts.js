@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import "./Posts.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { retrievePosts } from "./actions";
+import { retrievePosts, deleteTutorial } from "./actions";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
+import Modal from "react-modal";
+import ModalComponent from "../modal/modal";
+import { toggleModal } from "../modal/actions";
+Modal.setAppElement("body");
 const Posts = (props) => {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state);
   let posts = globalState.PostsReducer.posts;
   let isLoading = globalState.PostsReducer.isLoading;
+  // const [modalIsOpen, setIsOpen] = useState(false);
+
+  const [rowId, setRowId] = useState("");
   const [columns, setColumns] = useState([
     {
       dataField: "id",
@@ -23,8 +30,46 @@ const Posts = (props) => {
       sort: true,
       filter: textFilter(),
     },
+    {
+      dataField: "delete",
+      text: "Delete",
+      editable: false,
+      formatter: (cellContent, row) => {
+        // this.setState({ rowId: row._id });
+        setRowId(row.id);
+        return (
+          <button
+            className="btn btn-danger btn-xs"
+            // onClick={() => console.log("deleted", row._id)}
+            onClick={() => dispatch(toggleModal(true))}
+          >
+            Delete
+          </button>
+        );
+      },
+    },
   ]);
-
+  // const customStyles = {
+  //   content: {
+  //     top: "50%",
+  //     left: "50%",
+  //     right: "auto",
+  //     bottom: "auto",
+  //     marginRight: "-50%",
+  //     transform: "translate(-50%, -50%)",
+  //   },
+  // };
+  // const openModal = () => {
+  //   setIsOpen(true);
+  // };
+  // const closeModal = () => {
+  //   setIsOpen(false);
+  // };
+  const onDelete = (rowId) => {
+    dispatch(deleteTutorial(rowId));
+    dispatch(retrievePosts());
+    dispatch(toggleModal(false));
+  };
   useEffect(() => {
     dispatch(retrievePosts());
   }, []);
@@ -50,6 +95,53 @@ const Posts = (props) => {
           />
         )}
       </div>
+      <ModalComponent onDelete={onDelete}>
+        <span>
+          Do you really want to delete this question? This process cannot be
+          undone.
+        </span>
+        <div>
+          <input
+            type="button"
+            variant="secondary"
+            value="Cancel"
+            onClick={() => dispatch(toggleModal(false))}
+          />
+          <input
+            type="button"
+            variant="danger"
+            value="Delete"
+            onClick={() => onDelete(rowId)}
+          />
+        </div>
+      </ModalComponent>
+      {/* <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <button onClick={closeModal}>close</button>
+        <span>
+          Do you really want to delete this question? This process cannot be
+          undone.
+        </span>
+        <div>
+          <input
+            type="button"
+            variant="secondary"
+            value="Cancel"
+            onClick={closeModal}
+          />
+          <input
+            type="button"
+            variant="danger"
+            value="Delete"
+            onClick={() => onDelete(rowId)}
+          />
+        </div>
+      </Modal> */}
     </React.Fragment>
   );
 };

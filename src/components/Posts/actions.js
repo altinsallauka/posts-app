@@ -74,18 +74,30 @@ export const retrievePosts = () => async (dispatch) => {
 //     }
 //   };
 
-//   export const deleteTutorial = (id) => async (dispatch) => {
-//     try {
-//       await TutorialDataService.delete(id);
+export const deleteTutorial = (id) => async (dispatch) => {
+  dispatch({
+    type: DELETE_POST_LOADING,
+    payload: true,
+  });
+  try {
+    await PostsDataService.delete(id);
 
-//       dispatch({
-//         type: DELETE_TUTORIAL,
-//         payload: { id },
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+    dispatch({
+      type: DELETE_POST_SUCCESS,
+      payload: { id },
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: DELETE_POST_ERROR,
+      payload: err,
+    });
+    dispatch({
+      type: DELETE_POST_LOADING,
+      payload: false,
+    });
+  }
+};
 
 //   export const deleteAllTutorials = () => async (dispatch) => {
 //     try {

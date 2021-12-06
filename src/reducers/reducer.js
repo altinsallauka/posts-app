@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import categoriesReducer from "../components/Posts/reducer";
+import PostsReducer from "../components/Posts/reducer";
+import ModalReducer from "./../components/modal/reducer";
 const rootReducer = combineReducers({
-  PostsReducer: categoriesReducer,
+  PostsReducer: PostsReducer,
+  ModalReducer: ModalReducer,
 });
 export default rootReducer;
