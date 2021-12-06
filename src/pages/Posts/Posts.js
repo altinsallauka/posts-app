@@ -9,6 +9,7 @@ import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import Modal from "react-modal";
 import ModalComponent from "../../components/modal/modal";
 import { toggleModal } from "../../components/modal/actions";
+import Button from "../../components/button/button";
 Modal.setAppElement("body");
 const Posts = (props) => {
   const dispatch = useDispatch();
@@ -70,6 +71,9 @@ const Posts = (props) => {
     dispatch(retrievePosts());
     dispatch(toggleModal(false));
   };
+  const handleClick = () => {
+    dispatch(toggleModal(false));
+  };
   const modalTitle = "Hello Everyone";
   useEffect(() => {
     dispatch(retrievePosts());
@@ -102,20 +106,36 @@ const Posts = (props) => {
           undone.
         </span>
         <div className="mt-4">
-          <input
+          <Button
+            type="button"
+            value="Cancel"
+            className="btn btn-secondary"
+            onClick={() => dispatch(toggleModal(false))}
+          >
+            Cancel
+          </Button>
+          {/* <input
             type="button"
             variant="secondary"
             value="Cancel"
             className="btn btn-secondary"
             onClick={() => dispatch(toggleModal(false))}
-          />
-          <input
+          /> */}
+          {/* <input
             type="button"
             variant="danger"
             value="Delete"
             className="btn btn-danger"
             onClick={() => onDelete(rowId)}
-          />
+          /> */}
+          <Button
+            type="button"
+            value="Delete"
+            className="btn btn-danger"
+            onClick={() => onDelete(rowId)}
+          >
+            Delete
+          </Button>
         </div>
       </ModalComponent>
       {/* <Modal
