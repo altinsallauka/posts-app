@@ -1,6 +1,6 @@
 import http from "../utils/http-common";
 
-class FeedbackService {
+class PostsDataService {
   getAll() {
     return http.get("/posts");
   }
@@ -30,4 +30,4 @@ class FeedbackService {
   }
 }
 
-export default new FeedbackService();
+export default new PostsDataService();
